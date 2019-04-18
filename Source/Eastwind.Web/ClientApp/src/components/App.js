@@ -6,6 +6,8 @@ import HomePage from "./home/HomePage";
 import ProductsPage from "./products/ProductsPage";
 import ManageCourse from './products/ManageProductPage'
 import ManageProductPage from "./products/ManageProductPage";
+import "../../node_modules/react-toastify/dist/ReactToastify.min.css";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   /*Only one route in a switch can match. Order of the delclaration is important*/
@@ -19,6 +21,7 @@ function App() {
         <Route path="/product/" component={ManageProductPage}/>
         <Route path="/about" component={AboutPage} />
       </Switch>
+      <ToastContainer autoClose={3000} hideProgressBar/>
     </div>
   );
 }

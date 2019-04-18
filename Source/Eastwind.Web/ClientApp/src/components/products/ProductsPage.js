@@ -36,23 +36,28 @@ class ProductsPage extends React.Component {
   };
   render() {
     return (
-      <div>
+      <>
         {this.state.redirectToAddCoursePage && <Redirect to="/product" />}{" "}
         {/* If redirectToAddCourse, we will redirect to product */}
         <h2>Products</h2>
-        <Spinner/>
-        <button
-          style={{ marginBottom: 20 }}
-          className="btn btn-primary add-course"
-          onClick={() => this.setState({ redirectToAddCoursePage: true })}
-        >
-          Add Course
-        </button>
-        <ProductList
-          products={this.props.products}
-          onRequestSort={this.handleRequestSort}
-        />
-      </div>
+        {this.props.loading ? (
+          <Spinner />
+        ) : (
+          <>
+            <button
+              style={{ marginBottom: 20 }}
+              className="btn btn-primary add-course"
+              onClick={() => this.setState({ redirectToAddCoursePage: true })}
+            >
+              Add Course
+            </button>
+            <ProductList
+              products={this.props.products}
+              onRequestSort={this.handleRequestSort}
+            />{" "}
+          </>
+        )}
+      </>
     );
   }
 }
@@ -74,7 +79,8 @@ function mapStateToProps(state) {
                   : ""
             };
           }),
-    categories: state.categories
+    categories: state.categories,
+    loading: state.apiCallInProgress > 0
   };
 }
 

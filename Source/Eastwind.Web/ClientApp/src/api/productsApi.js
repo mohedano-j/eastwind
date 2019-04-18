@@ -13,8 +13,8 @@ export function getProduct(id) {
 }
 
 export function saveProduct(product) {
-  return fetch(baseUrl + (product.id || ""), {
-    method:  product.id ? "PUT" : "POST", // POST for create, PUT to update when id already exists.
+  return fetch(baseUrl, {
+    method:  product.productId ? "PUT" : "POST", // POST for create, PUT to update when id already exists.
     headers: { "content-type": "application/json" },
     body: JSON.stringify(product)
   })

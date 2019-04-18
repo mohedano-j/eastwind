@@ -1,12 +1,13 @@
 import * as types from "./actionTypes";
 import * as productsApi from "../../api/productsApi";
+import {beginApiCall, apiCallError} from "./apiStatusActions";
 import { orderBy } from "lodash";
 
 export function loadProductsSuccess(products) {
     return { type: types.LOAD_PRODUCTS_SUCCESS, products };
   }
   export function loadProductSuccess(product) {
-    return { type: types.LOAD_PRODUCT_SUCCESS, product };
+    return { type: types.LOAD_PRODUCTS_SUCCESS, product };
   }
   
   export function createProductSuccess(product) {
@@ -19,12 +20,14 @@ export function loadProductsSuccess(products) {
 
   export function loadProducts() {
     return function(dispatch) {
+      dispatch(beginApiCall());
       return productsApi
         .getProducts()
         .then(products => {
           dispatch(loadProductsSuccess(products));
         })
         .catch(error => {
+          dispatch(apiCallError(error));
           throw error;
         });
     };
@@ -38,6 +41,7 @@ export function loadProductsSuccess(products) {
           dispatch(loadProductSuccess(product));
         })
         .catch(error => {
+          dispatch(apiCallError(error));
           throw error;
         });
     };
@@ -51,6 +55,7 @@ export function loadProductsSuccess(products) {
   export function saveProduct(product) {
     //eslint-disable-next-line no-unused-vars
     return function(dispatch, getState) {
+      dispatch(beginApiCall());
       return productsApi
         .saveProduct(product)
         .then(savedProduct => {
@@ -59,6 +64,7 @@ export function loadProductsSuccess(products) {
             : dispatch(createProductSuccess(savedProduct));
         })
         .catch(error => {
+          dispatch(apiCallError(error));
           throw error;
         });
     };
