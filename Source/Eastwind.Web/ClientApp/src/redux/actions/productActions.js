@@ -18,6 +18,10 @@ export function loadProductsSuccess(products) {
     return { type: types.UPDATE_PRODUCT_SUCCESS, product };
   }
 
+  export function deleteProductOptimistic(product) {
+    return { type: types.DELETE_PRODUCT_OPTIMISTIC, product };
+  }
+
   export function loadProducts() {
     return function(dispatch) {
       dispatch(beginApiCall());
@@ -67,5 +71,13 @@ export function loadProductsSuccess(products) {
           dispatch(apiCallError(error));
           throw error;
         });
+    };
+  }
+  export function deleteProduct(product) {
+    return function(dispatch) {
+      // Doing optimistic delete, so not dispatching begin/end api call
+      // actions, or apiCallError action since we're not showing the loading status for this.
+      dispatch(deleteProductOptimistic(product));
+      return productsApi.deleteProduct(product.productId);
     };
   }

@@ -12,11 +12,11 @@ export default function productsReducer(state = initialState.products, action) {
       );
     case types.LOAD_PRODUCTS_SUCCESS:
       return action.products;
-    case types.LOAD_PRODUCT_SUCCESS:
-      return action.product;
     case types.SORT_PRODUCTS:
       return action.products;
+    case types.DELETE_PRODUCT_OPTIMISTIC:
+      return state.filter(product => product.productId !== action.product.productId);
     default:
       return state;
   }
-}
+} 

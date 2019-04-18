@@ -6,16 +6,20 @@ import { bindActionCreators } from "redux";
 import ProductList from "./ProductList";
 import { Redirect } from "react-router-dom";
 import Spinner from "../common/Spinner/Spinner";
+import { toast } from "react-toastify";
 import PropTypes from "prop-types";
 
 /* This is an example of a Class component */
 class ProductsPage extends React.Component {
-  state = {
-    order: "asc",
-    orderBy: "name"
-  };
+  constructor() {
+    super();
+    this.state = {
+      clickedProduct: {},
+      modalIsOpen: false
+    }
+  }
   componentDidMount() {
-    const { products, categories, actions } = this.props;
+    const { products, categories, actions } = this.props; 
     if (categories.length === 0) {
       actions.loadCategories().catch(error => {
         alert("Loading categories failed" + error);
@@ -34,6 +38,22 @@ class ProductsPage extends React.Component {
       alert("Loading products failed" + error);
     });
   };
+  handleDeleteSelected = productSelected => {
+    this.setState({modalIsOpen: true})
+    this.setState({clickedProduct: productSelected});
+  };
+
+  handleDeleteProduct = async () => {
+    this.setState({modalIsOpen: false})
+    toast.success("Product deleted");
+    const product = this.state.clickedProduct;
+    try {
+      await this.props.actions.deleteProduct(product);
+    } catch (error) {
+      toast.error("Delete failed. " + error.message, { autoClose: false });
+    }
+  };
+
   render() {
     return (
       <>
@@ -54,7 +74,10 @@ class ProductsPage extends React.Component {
             <ProductList
               products={this.props.products}
               onRequestSort={this.handleRequestSort}
-            />{" "}
+              onDeleteClick={this.handleDeleteSelected}
+              onDeleteConfirm={this.handleDeleteProduct}
+              modalIsOpen = {this.state.modalIsOpen}
+            />
           </>
         )}
       </>
@@ -92,7 +115,8 @@ function mapDispatchToProps(dispatch) {
       loadCategories: bindActionCreators(
         categoryActions.loadCategories,
         dispatch
-      )
+      ),
+      deleteProduct: bindActionCreators(productActions.deleteProduct, dispatch)
     }
   };
 }

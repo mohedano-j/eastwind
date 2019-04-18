@@ -1,5 +1,6 @@
 import { handleResponse, handleError } from "./apiUtils";
-const baseUrl = process.env.API_URL + "/products/500";
+const baseUrl = process.env.API_URL + "/products/";
+const sleep = "500"
 
 export function getProducts() {
   return fetch(baseUrl)
@@ -7,13 +8,13 @@ export function getProducts() {
     .catch(handleError);
 }
 export function getProduct(id) {
-  return fetch(baseUrl + id)
+  return fetch(baseUrl + id + "/" + sleep)
     .then(handleResponse)
     .catch(handleError);
 }
 
 export function saveProduct(product) {
-  return fetch(baseUrl, {
+  return fetch(baseUrl + sleep, {
     method:  product.productId ? "PUT" : "POST", // POST for create, PUT to update when id already exists.
     headers: { "content-type": "application/json" },
     body: JSON.stringify(product)

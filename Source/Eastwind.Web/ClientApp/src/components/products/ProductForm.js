@@ -25,7 +25,7 @@ const productForm = ({
         label="Name"
         value={product.productName|| ""}
         onChange={onChange}
-        error={errors.productName}
+        error={errors.title}
       />
 
       <SelectInput
@@ -38,7 +38,7 @@ const productForm = ({
           text: category.categoryName
         }))}
         onChange={onChange}
-        error={errors.categoryId}
+        error={errors.category}
       />
 
       <TextInput
