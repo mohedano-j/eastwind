@@ -11,15 +11,15 @@ const ProductList = ({
   modalIsOpen
 }) => (
   <>
-    <table className="table">
+    <table className="table table-bordered">
       <thead>
         <tr>
           <th>
-            Name<button onClick={() => onRequestSort("productName")} />
+            <button className="btn default" onClick={() => onRequestSort("productName")} >Name</button>
           </th>
-          <th>Price</th>
-          <th>Units</th>
-          <th>Category</th>
+          <th> <button className="btn default" onClick={() => onRequestSort("unitPrice")} >Price</button></th>
+          <th><button className="btn default" onClick={() =>onRequestSort("unitsInStock")} >Units in Stock</button></th>
+          <th><button className="btn default" onClick={() =>onRequestSort("categoryName")} >Category</button></th>
           <th />
         </tr>
       </thead>

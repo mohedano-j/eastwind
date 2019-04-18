@@ -15,11 +15,13 @@ class ProductsPage extends React.Component {
     super();
     this.state = {
       clickedProduct: {},
-      modalIsOpen: false
-    }
+      nextOrderAsc: "asc",
+      modalIsOpen: false,
+      fieldOrder: ""
+    };
   }
   componentDidMount() {
-    const { products, categories, actions } = this.props; 
+    const { products, categories, actions } = this.props;
     if (categories.length === 0) {
       actions.loadCategories().catch(error => {
         alert("Loading categories failed" + error);
@@ -32,19 +34,28 @@ class ProductsPage extends React.Component {
       });
     }
   }
-  handleRequestSort = property => {
+  handleRequestSort = clickedHeader => {
     const { products, actions } = this.props;
-    actions.sortProducts(this.props.products, property).catch(error => {
-      alert("Loading products failed" + error);
-    });
+    if (this.state.fieldOrder === clickedHeader) {
+      this.setState({ nextOrderAsc: this.state.nextOrderAsc == "asc" ? "desc" : "asc" });
+    } else {
+      this.setState({ nextOrderAsc: "asc" });
+      this.setState({ fieldOrder: clickedHeader });
+    }
+    actions
+      .sortProducts(
+        this.props.products,
+        this.state.fieldOrder,
+        this.state.nextOrderAsc
+      );
   };
   handleDeleteSelected = productSelected => {
-    this.setState({modalIsOpen: true})
-    this.setState({clickedProduct: productSelected});
+    this.setState({ modalIsOpen: true });
+    this.setState({ clickedProduct: productSelected });
   };
 
   handleDeleteProduct = async () => {
-    this.setState({modalIsOpen: false})
+    this.setState({ modalIsOpen: false });
     toast.success("Product deleted");
     const product = this.state.clickedProduct;
     try {
@@ -76,7 +87,7 @@ class ProductsPage extends React.Component {
               onRequestSort={this.handleRequestSort}
               onDeleteClick={this.handleDeleteSelected}
               onDeleteConfirm={this.handleDeleteProduct}
-              modalIsOpen = {this.state.modalIsOpen}
+              modalIsOpen={this.state.modalIsOpen}
             />
           </>
         )}

@@ -37,22 +37,8 @@ export function loadProductsSuccess(products) {
     };
   }
 
-  export function loadProduct(productId) {
-    return function(dispatch) {
-      return productsApi
-        .getProduct(productId)
-        .then(product => {
-          dispatch(loadProductSuccess(product));
-        })
-        .catch(error => {
-          dispatch(apiCallError(error));
-          throw error;
-        });
-    };
-  }
-
   export function sortProducts(products,field,asc) {
-    products = orderBy(products,"productName");
+    products = orderBy(products,field,asc);
     return { type: types.SORT_PRODUCTS,products};
   }
 

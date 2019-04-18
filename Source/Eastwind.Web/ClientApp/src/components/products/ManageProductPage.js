@@ -9,7 +9,7 @@ import { toast } from "react-toastify";
 
 //Mock of product object for a new product. All mocks should go to a different
 const newProduct = {
-  productId: null,
+  productId: 0,
   productName: "",
   categoryId: "0",
   unitPrice: 0,
@@ -56,6 +56,9 @@ function ManageProductPage({
       [name]: value // JS computed property syntax to allow reference to a property via a variable.
     }));
   }
+  function handleCancel(event){
+    history.push("/products");
+  }
 
   function handleSave(event) {
     event.preventDefault();
@@ -97,7 +100,7 @@ function ManageProductPage({
       errors.unitsInStock = "Units in Stocks must be a positive integer";
     }
 
-    if(!errors.categoryId && !categories.find(category => category.categoryId === categoryId)){
+    if(!errors.categoryId && !categories.find(category => category.categoryId == categoryId)){
       errors.categoryId = "Please select a valid";
     }
 
@@ -116,6 +119,7 @@ function ManageProductPage({
       categories={categories}
       onChange={handleChange}
       onSave={handleSave}
+      onCancel={handleCancel}
       saving={saving}
     />
   );

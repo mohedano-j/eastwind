@@ -8,6 +8,7 @@ const productForm = ({
   product,
   categories,
   onSave,
+  onCancel,
   onChange,
   saving = false,
   errors = {}
@@ -56,10 +57,12 @@ const productForm = ({
         onChange={onChange}
         error={errors.unitsInStock}
       />
-
+      <div>
       <button type="submit" disabled={saving} className="btn btn-primary">
         {saving ? "Saving..." : "Save"}
       </button>
+      <button onClick={onCancel} className="btn btn-light ml-2">Cancel</button>
+      </div>
     </form>
   );
 };
