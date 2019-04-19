@@ -65,7 +65,12 @@ const ProductList = ({
 );
 
 ProductList.propTypes = {
-  products: PropTypes.array.isRequired
+  products: PropTypes.array.isRequired,
+  onRequestSort: PropTypes.func.isRequired,
+  onDeleteClick: PropTypes.func.isRequired,
+  onDeleteConfirm: PropTypes.func.isRequired,
+  onModalCancel: PropTypes.func.isRequired,
+  modalIsOpen: PropTypes.bool.isRequired
 };
 
 export default ProductList;

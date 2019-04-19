@@ -7,7 +7,7 @@ import PropTypes from "prop-types";
 import Spinner from "../common/Spinner/Spinner";
 import { toast } from "react-toastify";
 
-//Mock of product object for a new product. All mocks should go to a different
+//Mock of product object for a new product. All mocks should go to a different folder
 const newProduct = {
   productId: 0,
   productName: "",
@@ -58,7 +58,7 @@ function ManageProductPage({
   }
   /*The history object allows you to manage and handle the browser history inside your views or components.*/
   /*push(path, [state]): (function), pushes a new entry onto the history stack*/
-  function handleCancel(event){
+  function handleCancel(){
     history.push("/products");
   }
 

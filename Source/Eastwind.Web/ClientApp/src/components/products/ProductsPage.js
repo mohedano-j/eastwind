@@ -37,20 +37,21 @@ class ProductsPage extends React.Component {
   }
   /* Set of handlers to manipulate state or call actions */
   handleRequestSort = clickedHeader => {
-    const { products, actions } = this.props;
+    const {actions } = this.props;
 
-    actions
-      .sortProducts(
-        this.props.products,
-        clickedHeader,
-        this.state.nextOrderAsc
-      );
-      if (this.state.fieldOrder === clickedHeader) {
-        this.setState({ nextOrderAsc: this.state.nextOrderAsc == "asc" ? "desc" : "asc" });
-      } else {
-        this.setState({ nextOrderAsc: "desc" });
-        this.setState({ fieldOrder: clickedHeader });
-      }
+    actions.sortProducts(
+      this.props.products,
+      clickedHeader,
+      this.state.nextOrderAsc
+    );
+    if (this.state.fieldOrder === clickedHeader) {
+      this.setState({
+        nextOrderAsc: this.state.nextOrderAsc == "asc" ? "desc" : "asc"
+      });
+    } else {
+      this.setState({ nextOrderAsc: "desc" });
+      this.setState({ fieldOrder: clickedHeader });
+    }
   };
   handleModalCancel = () => {
     this.setState({ modalIsOpen: false });
@@ -105,6 +106,15 @@ class ProductsPage extends React.Component {
   }
 }
 /*End JSX Code*/
+
+ProductsPage.propTypes = {
+  categories: PropTypes.array.isRequired,
+  products: PropTypes.array.isRequired,
+  actions: PropTypes.object.isRequired,
+  loading: PropTypes.bool
+}
+
+
 /* Conections to REDUX */
 function mapStateToProps(state) {
   return {
@@ -147,3 +157,4 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(ProductsPage);
+/* End Conections to REDUX */

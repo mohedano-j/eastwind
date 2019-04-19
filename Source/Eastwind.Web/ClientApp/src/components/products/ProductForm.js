@@ -4,7 +4,7 @@ import TextInput from "../common/Form/TextInput";
 import SelectInput from "../common/Form/SelectInput";
 
 
-const productForm = ({
+const ProductForm = ({
   product,
   categories,
   onSave,
@@ -67,7 +67,7 @@ const productForm = ({
   );
 };
 
-productForm.propTypes = {
+ProductForm.propTypes = {
   categories: PropTypes.array.isRequired,
   product: PropTypes.object.isRequired,
   errors: PropTypes.object,
@@ -77,4 +77,4 @@ productForm.propTypes = {
   saving: PropTypes.bool
 };
 
-export default productForm;
+export default ProductForm;

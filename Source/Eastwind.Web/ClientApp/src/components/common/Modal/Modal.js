@@ -47,7 +47,8 @@ Modal.propTypes = {
   onSave: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired,
   label: PropTypes.string,
-  saveLabelr: PropTypes.string
+  saveLabel: PropTypes.string,
+  isOpen: PropTypes.bool.isRequired
 };
 
 export default Modal;
