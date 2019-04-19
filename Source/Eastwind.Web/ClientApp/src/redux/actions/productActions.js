@@ -33,7 +33,8 @@ export function loadProductsSuccess(products) {
         });
     };
   }
-
+  /* This should be part of the component and not redux*/
+  /* I am adding this here because I want to explore more REDUX */
   export function sortProducts(products,field,asc) {
     products = orderBy(products,field,asc);
     return { type: types.SORT_PRODUCTS,products};
