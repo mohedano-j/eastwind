@@ -32,6 +32,7 @@ function ManageProductPage({
   const [product, setProduct] = useState({ ...props.product });
   const [errors, setErrors] = useState({});
   const [saving, setSavings] = useState(false);
+  //Use effect accept a function that may be called any time after render
   useEffect(() => {
     if (categories.length === 0) {
       loadCategories().catch(error => {
