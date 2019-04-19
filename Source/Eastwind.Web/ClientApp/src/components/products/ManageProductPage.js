@@ -7,7 +7,7 @@ import PropTypes from "prop-types";
 import Spinner from "../common/Spinner/Spinner";
 import { toast } from "react-toastify";
 
-//Mock of product object for a new product. All mocks should go to a different folder
+//Mock of product object for a new product. TODO Refactor all mocks should go to a different folder
 const newProduct = {
   productId: 0,
   productName: "",
@@ -44,15 +44,15 @@ function ManageProductPage({
         alert("Loading productss failed" + error);
       });
     } else {
-      setProduct({ ...props.product }); // Copy course on props in state.
+      setProduct({ ...props.product }); // Copy product on props in state.
     }
-  }, [props.product]); //Second argument is an array argument to watch if anything change in that object
+  }, [props.product]); //Second argument is an array argument to watch if anything change in those objects
 
   function handleChange(event) {
     const { name, value } = event.target;
     //Using functional form of setState so I can safely set a new state that's based on the existing state
-    setProduct(prevCourse => ({
-      ...prevCourse,
+    setProduct(prevProduct => ({
+      ...prevProduct,
       [name]: value // JS computed property syntax to allow reference to a property via a variable.
     }));
   }

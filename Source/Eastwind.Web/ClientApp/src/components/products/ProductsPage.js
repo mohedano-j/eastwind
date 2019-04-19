@@ -77,8 +77,8 @@ class ProductsPage extends React.Component {
   render() {
     return (
       <>
-        {/* If redirectToAddCourse, we will redirect to product */}
-        {this.state.redirectToAddCoursePage && <Redirect to="/product" />}
+        {/* If redirectToAddProduct, we will redirect to product */}
+        {this.state.redirectToAddProductPage && <Redirect to="/product" />}
         <h2>Products</h2>
         {this.props.loading ? (
           <Spinner />
@@ -86,10 +86,10 @@ class ProductsPage extends React.Component {
           <>
             <button
               style={{ marginBottom: 20 }}
-              className="btn btn-primary add-course"
-              onClick={() => this.setState({ redirectToAddCoursePage: true })}
+              className="btn btn-primary add-product"
+              onClick={() => this.setState({ redirectToAddProductPage: true })}
             >
-              Add Course
+              Add Product
             </button>
             <ProductList
               products={this.props.products}

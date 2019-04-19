@@ -6,9 +6,6 @@ import { orderBy } from "lodash";
 export function loadProductsSuccess(products) {
     return { type: types.LOAD_PRODUCTS_SUCCESS, products };
   }
-  export function loadProductSuccess(product) {
-    return { type: types.LOAD_PRODUCTS_SUCCESS, product };
-  }
   
   export function createProductSuccess(product) {
     return { type: types.CREATE_PRODUCT_SUCCESS, product };
