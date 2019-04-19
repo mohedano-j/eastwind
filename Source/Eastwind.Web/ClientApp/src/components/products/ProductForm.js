@@ -73,6 +73,7 @@ productForm.propTypes = {
   errors: PropTypes.object,
   onSave: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
+  onCancel: PropTypes.func.isRequired,
   saving: PropTypes.bool
 };
 

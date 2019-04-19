@@ -8,6 +8,7 @@ const ProductList = ({
   onRequestSort,
   onDeleteClick,
   onDeleteConfirm,
+  onModalCancel,
   modalIsOpen
 }) => (
   <>
@@ -58,6 +59,7 @@ const ProductList = ({
       saveLabel="Confirm"
       isOpen = {modalIsOpen}
       onSave={onDeleteConfirm}
+      onCancel={onModalCancel}
     />
   </>
 );

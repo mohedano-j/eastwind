@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import './Modal.css';
 
-const Modal = ({ id, title, label,saveLabel, onSave , isOpen }) => {
+const Modal = ({ id, title, label,saveLabel, onSave , onCancel, isOpen }) => {
   return (
     <div className={"modal fade " + (isOpen ? "show" : "")} tabIndex="-1" role="dialog" id={id}>
       <div className="modal-dialog" role="document">
@@ -14,6 +14,7 @@ const Modal = ({ id, title, label,saveLabel, onSave , isOpen }) => {
               className="close"
               data-dismiss="modal"
               aria-label="Close"
+              onClick={onCancel}
             >
               <span aria-hidden="true">&times;</span>
             </button>
@@ -30,7 +31,7 @@ const Modal = ({ id, title, label,saveLabel, onSave , isOpen }) => {
             <button
               type="button"
               className="btn btn-secondary"
-              data-dismiss="modal"
+              onClick={onCancel}
             >
             Cancel
             </button>
@@ -44,6 +45,7 @@ Modal.propTypes = {
   id: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   onSave: PropTypes.func.isRequired,
+  onCancel: PropTypes.func.isRequired,
   label: PropTypes.string,
   saveLabelr: PropTypes.string
 };

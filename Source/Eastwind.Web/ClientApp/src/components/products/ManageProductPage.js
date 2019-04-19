@@ -56,6 +56,8 @@ function ManageProductPage({
       [name]: value // JS computed property syntax to allow reference to a property via a variable.
     }));
   }
+  /*The history object allows you to manage and handle the browser history inside your views or components.*/
+  /*push(path, [state]): (function), pushes a new entry onto the history stack*/
   function handleCancel(event){
     history.push("/products");
   }
@@ -128,7 +130,7 @@ export function getProductById(products, id) {
   return products.find(product => product.productId === id) || null;
 }
 
-//OwnProps access tp component's props, we can use this to read the url data by react router
+//OwnProps access to component's props, we can use this to read the url data by react router
 function mapStateToProps(state, ownProps) {
   const productId = ownProps.match.params.id
     ? parseInt(ownProps.match.params.id, 10)
@@ -144,7 +146,7 @@ function mapStateToProps(state, ownProps) {
   };
 }
 
-/* Make maptDispatch cleaner by using the object form, this is cleaner*/
+/* Make maptDispatch cleaner by using the object form*/
 const mapDispatchToProps = {
   loadProducts: productActions.loadProducts,
   loadCategories: categoryActions.loadCategories,

@@ -20,6 +20,7 @@ class ProductsPage extends React.Component {
       fieldOrder: ""
     };
   }
+  /*This will run every time after the component is mount */
   componentDidMount() {
     const { products, categories, actions } = this.props;
     if (categories.length === 0) {
@@ -34,21 +35,28 @@ class ProductsPage extends React.Component {
       });
     }
   }
+  /* Set of handlers to manipulate state or call actions */
   handleRequestSort = clickedHeader => {
     const { products, actions } = this.props;
-    if (this.state.fieldOrder === clickedHeader) {
-      this.setState({ nextOrderAsc: this.state.nextOrderAsc == "asc" ? "desc" : "asc" });
-    } else {
-      this.setState({ nextOrderAsc: "asc" });
-      this.setState({ fieldOrder: clickedHeader });
-    }
+
     actions
       .sortProducts(
         this.props.products,
-        this.state.fieldOrder,
+        clickedHeader,
         this.state.nextOrderAsc
       );
+      if (this.state.fieldOrder === clickedHeader) {
+        this.setState({ nextOrderAsc: this.state.nextOrderAsc == "asc" ? "desc" : "asc" });
+      } else {
+        this.setState({ nextOrderAsc: "desc" });
+        this.setState({ fieldOrder: clickedHeader });
+      }
   };
+  handleModalCancel = () => {
+    this.setState({ modalIsOpen: false });
+    this.setState({ clickedProduct: {} });
+  };
+
   handleDeleteSelected = productSelected => {
     this.setState({ modalIsOpen: true });
     this.setState({ clickedProduct: productSelected });
@@ -64,12 +72,12 @@ class ProductsPage extends React.Component {
       toast.error("Delete failed. " + error.message, { autoClose: false });
     }
   };
-
+  /*JSX Code*/
   render() {
     return (
       <>
-        {this.state.redirectToAddCoursePage && <Redirect to="/product" />}{" "}
         {/* If redirectToAddCourse, we will redirect to product */}
+        {this.state.redirectToAddCoursePage && <Redirect to="/product" />}
         <h2>Products</h2>
         {this.props.loading ? (
           <Spinner />
@@ -87,6 +95,7 @@ class ProductsPage extends React.Component {
               onRequestSort={this.handleRequestSort}
               onDeleteClick={this.handleDeleteSelected}
               onDeleteConfirm={this.handleDeleteProduct}
+              onModalCancel={this.handleModalCancel}
               modalIsOpen={this.state.modalIsOpen}
             />
           </>
@@ -95,6 +104,8 @@ class ProductsPage extends React.Component {
     );
   }
 }
+/*End JSX Code*/
+/* Conections to REDUX */
 function mapStateToProps(state) {
   return {
     products:
