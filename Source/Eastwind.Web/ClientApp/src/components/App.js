@@ -6,6 +6,7 @@ import HomePage from "./home/HomePage";
 import ProductsPage from "./products/ProductsPage";
 import ManageProductPage from "./products/ManageProductPage";
 import PageNotFound from "./pageNotFound/PageNotFound";
+import Hello from "./Hello";
 import "../../node_modules/react-toastify/dist/ReactToastify.min.css";
 import { ToastContainer } from "react-toastify";
 
@@ -20,6 +21,7 @@ function App() {
         <Route path="/product/:id" component={ManageProductPage}/>
         <Route path="/product/" component={ManageProductPage}/>
         <Route path="/about" component={AboutPage} />
+        <Route path="/helloTypescript" component={Hello} />
         <Route component={PageNotFound} />
       </Switch>
       <ToastContainer autoClose={3000} hideProgressBar/>

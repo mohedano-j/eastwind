@@ -6,7 +6,7 @@ process.env.NODE_ENV = "development";
 
 module.exports = {
   target: "web",
-  devtool: "cheap-module-source-map",
+  devtool: "source-map",
   entry: "./src/index",
   output: {
     path: path.resolve(__dirname, "build"),
@@ -19,7 +19,8 @@ module.exports = {
     historyApiFallback: true,
     disableHostCheck: true,
     headers: { "Access-Control-Allow-Origin": "*" },
-    https: false
+    https: false,
+    contentBase: "html/"
   },
   plugins: [
     new webpack.DefinePlugin ({
@@ -30,13 +31,22 @@ module.exports = {
       favicon: "src/favicon1.ico"
     })
   ],
+
+  resolve: {
+    // Add '.ts' and '.tsx' as resolvable extensions.
+    extensions: [".ts", ".tsx", ".js", "jsx", ".json"]
+},
+  
   module: {
     rules: [
-      {
+      // All files with a '.ts' or '.tsx' extension will be handled by 'awesome-typescript-loader'.
+      { test: /\.tsx?$/, loader: "babel-loader" },
+      { 
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
-        use: ["babel-loader", "eslint-loader"]
+        use: ["babel-loader"]
       },
+      
       {
         test: /(\.css)$/,
         use: ["style-loader", "css-loader"]
