@@ -26,7 +26,7 @@ const ProductForm = ({
         label="Name"
         value={product.productName|| ""}
         onChange={onChange}
-        error={errors.title}
+        error={errors.productName}
       />
 
       <SelectInput
