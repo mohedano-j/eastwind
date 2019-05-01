@@ -96,9 +96,6 @@ class ProductsPage extends React.Component<propsType, stateType> {
   handleDeleteProduct = () => {
     this.setState({ modalIsOpen: false });
 
-    console.log("here");
-    console.log(this.state.clickedProduct);
-
     const product = this.state.clickedProduct;
 
     this.props.productDelete(product);
@@ -138,9 +135,23 @@ class ProductsPage extends React.Component<propsType, stateType> {
 }
 
 function mapStateToProps(state: any) {
+  const categories = state.categories ? state.categories : [];
+  const products = state.products ? state.products : [];
+
+  const productsWithCat = products.map((product: any) => {
+    const category = categories.find(
+      (category: any) => category.categoryId === product.categoryId
+    );
+    const categoryName = category ? category.categoryName : "";
+    return {
+      ...product,
+      categoryName: categoryName,
+      category: category
+    };
+  });
   return {
-    products: state.products ? state.products : [],
-    categories: state.categories ? state.categories : [],
+    products: productsWithCat,
+    categories: categories,
     loading: state.apiStatus > 0
   };
 }
