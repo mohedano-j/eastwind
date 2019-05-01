@@ -6,5 +6,6 @@ export interface Product {
   categoryId?: number;
   unitPrice?: number;
   unitsInStock?: number;
+  categoryName?: string;
   category?: Category;
 }
