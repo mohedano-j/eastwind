@@ -7,43 +7,72 @@ import ProductList from "./ProductList";
 import { Redirect } from "react-router-dom";
 import Spinner from "../common/Spinner/Spinner";
 import { toast } from "react-toastify";
-import PropTypes from "prop-types";
 
-/* This is an example of a Class component */
-class ProductsPage extends React.Component {
-  constructor() {
-    super();
+type propsType = {
+  products: Array<any>;
+  categories: Array<any>;
+  categoryListLoad: any;
+  productListLoad: any;
+  productListSort: any;
+  productDelete: any;
+  loading: boolean;
+};
+
+type stateType = {
+  products: Array<any>;
+  categories: Array<any>;
+  clickedProduct: any;
+  nextOrderAsc: string;
+  modalIsOpen: boolean;
+  fieldOrder: string;
+  redirectToAddProductPage: boolean;
+  apiStatus: number;
+};
+
+class ProductsPage extends React.Component<propsType, stateType> {
+  constructor(props: propsType) {
+    super(props);
     this.state = {
+      products: [],
+      categories: [],
       clickedProduct: {},
       nextOrderAsc: "asc",
       modalIsOpen: false,
-      fieldOrder: ""
+      fieldOrder: "",
+      redirectToAddProductPage: false,
+      apiStatus: 0
     };
   }
   /*This will run every time after the component is mount */
   componentDidMount() {
-    const { products, categories, actions } = this.props;
+    const {
+      products,
+      categories,
+      categoryListLoad,
+      productListLoad
+    } = this.props;
     if (categories.length === 0) {
-      actions.loadCategories().catch(error => {
+      categoryListLoad().catch((error: any) => {
         alert("Loading categories failed" + error);
       });
     }
 
     if (products.length === 0) {
-      actions.loadProducts().catch(error => {
-        alert("Loading productss failed" + error);
+      productListLoad().catch((error: any) => {
+        alert("Loading products failed" + error);
       });
     }
   }
-  /* Set of handlers to manipulate state or call actions */
-  handleRequestSort = clickedHeader => {
-    const {actions } = this.props;
 
-    actions.sortProducts(
+  handleRequestSort = (clickedHeader: string) => {
+    const { productListSort } = this.props;
+
+    productListSort(
       this.props.products,
       clickedHeader,
       this.state.nextOrderAsc
     );
+
     if (this.state.fieldOrder === clickedHeader) {
       this.setState({
         nextOrderAsc: this.state.nextOrderAsc == "asc" ? "desc" : "asc"
@@ -53,33 +82,32 @@ class ProductsPage extends React.Component {
       this.setState({ fieldOrder: clickedHeader });
     }
   };
+
   handleModalCancel = () => {
     this.setState({ modalIsOpen: false });
     this.setState({ clickedProduct: {} });
   };
 
-  handleDeleteSelected = productSelected => {
+  handleDeleteSelected = (productSelected: any) => {
     this.setState({ modalIsOpen: true });
     this.setState({ clickedProduct: productSelected });
   };
 
-  handleDeleteProduct = async () => {
+  handleDeleteProduct = () => {
     this.setState({ modalIsOpen: false });
-    toast.success("Product deleted");
+
     const product = this.state.clickedProduct;
-    try {
-      await this.props.actions.deleteProduct(product);
-    } catch (error) {
-      toast.error("Delete failed. " + error.message, { autoClose: false });
-    }
+
+    this.props.productDelete(product);
+
+    toast.success("Product deleted");
   };
-  /*JSX Code*/
+
   render() {
     return (
       <>
-        {/* If redirectToAddProduct, we will redirect to product */}
         {this.state.redirectToAddProductPage && <Redirect to="/product" />}
-        <h2>Products</h2>
+        <h2>Products {this.props.products.length}</h2>
         {this.props.loading ? (
           <Spinner />
         ) : (
@@ -105,56 +133,37 @@ class ProductsPage extends React.Component {
     );
   }
 }
-/*End JSX Code*/
 
-ProductsPage.propTypes = {
-  categories: PropTypes.array.isRequired,
-  products: PropTypes.array.isRequired,
-  actions: PropTypes.object.isRequired,
-  loading: PropTypes.bool
-}
+function mapStateToProps(state: any) {
+  const categories = state.categories ? state.categories : [];
+  const products = state.products ? state.products : [];
 
-
-/* Conections to REDUX */
-function mapStateToProps(state) {
+  const productsWithCat = products.map((product: any) => {
+    const category = categories.find(
+      (category: any) => category.categoryId === product.categoryId
+    );
+    const categoryName = category ? category.categoryName : "";
+    return {
+      ...product,
+      categoryName: categoryName,
+      category: category
+    };
+  });
   return {
-    products:
-      state.categories.length === 0
-        ? []
-        : state.products.map(product => {
-            return {
-              ...product,
-              categoryName:
-                state.categories.find(
-                  a => a.categoryId === product.categoryId
-                ) !== null
-                  ? state.categories.find(
-                      a => a.categoryId === product.categoryId
-                    ).categoryName
-                  : ""
-            };
-          }),
-    categories: state.categories,
-    loading: state.apiCallInProgress > 0
+    products: productsWithCat,
+    categories: categories,
+    loading: state.apiStatus > 0
   };
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    actions: {
-      loadProducts: bindActionCreators(productActions.loadProducts, dispatch),
-      sortProducts: bindActionCreators(productActions.sortProducts, dispatch),
-      loadCategories: bindActionCreators(
-        categoryActions.loadCategories,
-        dispatch
-      ),
-      deleteProduct: bindActionCreators(productActions.deleteProduct, dispatch)
-    }
-  };
-}
+const mapDispatchToProps = {
+  productListLoad: productActions.productListLoad,
+  productListSort: productActions.productListSort,
+  categoryListLoad: categoryActions.categoryListLoad,
+  productDelete: productActions.productDelete
+};
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(ProductsPage);
-/* End Conections to REDUX */
