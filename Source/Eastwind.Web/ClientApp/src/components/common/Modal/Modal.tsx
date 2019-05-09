@@ -1,10 +1,33 @@
 import React from "react";
 import PropTypes from "prop-types";
-import './Modal.css';
+import "./Modal.css";
 
-const Modal = ({ id, title, label,saveLabel, onSave , onCancel, isOpen }) => {
+type propsType = {
+  id: string;
+  title: string;
+  label: string;
+  saveLabel: string;
+  onSave: any;
+  onCancel: any;
+  isOpen: boolean;
+};
+
+const Modal = ({
+  id,
+  title,
+  label,
+  saveLabel,
+  onSave,
+  onCancel,
+  isOpen
+}: propsType) => {
   return (
-    <div className={"modal fade " + (isOpen ? "show" : "")} tabIndex="-1" role="dialog" id={id}>
+    <div
+      className={"modal fade " + (isOpen ? "show" : "")}
+      tabIndex={-1}
+      role="dialog"
+      id={id}
+    >
       <div className="modal-dialog" role="document">
         <div className="modal-content">
           <div className="modal-header">
@@ -20,9 +43,7 @@ const Modal = ({ id, title, label,saveLabel, onSave , onCancel, isOpen }) => {
             </button>
           </div>
           <div className="modal-body">
-            <p>
-                {label}
-            </p>
+            <p>{label}</p>
           </div>
           <div className="modal-footer">
             <button type="button" onClick={onSave} className="btn btn-primary">
@@ -33,22 +54,13 @@ const Modal = ({ id, title, label,saveLabel, onSave , onCancel, isOpen }) => {
               className="btn btn-secondary"
               onClick={onCancel}
             >
-            Cancel
+              Cancel
             </button>
           </div>
         </div>
       </div>
     </div>
   );
-};
-Modal.propTypes = {
-  id: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
-  onSave: PropTypes.func.isRequired,
-  onCancel: PropTypes.func.isRequired,
-  label: PropTypes.string,
-  saveLabel: PropTypes.string,
-  isOpen: PropTypes.bool.isRequired
 };
 
 export default Modal;

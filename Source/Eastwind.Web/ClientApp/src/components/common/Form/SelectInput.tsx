@@ -1,6 +1,16 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+type propsType = {
+  name: string;
+  label: string;
+  onChange: any;
+  defaultOption: string;
+  value: string;
+  error: any;
+  options: Array<any>;
+};
+
 const SelectInput = ({
   name,
   label,
@@ -9,12 +19,11 @@ const SelectInput = ({
   value,
   error,
   options
-}) => {
+}: propsType) => {
   return (
     <div className="form-group">
       <label htmlFor={name}>{label}</label>
       <div className="field">
-        {/* Note, value is set here rather than on the option - docs: https://facebook.github.io/react/docs/forms.html */}
         <select
           name={name}
           value={value}
