@@ -1,5 +1,5 @@
 import React from "react";
-import ProductForm from "./ProductForm";
+import ProductForm from "../ProductForm";
 import { shallow } from "enzyme";
 //Test with ShallowDom
 function renderProductForm(args: { saving?: boolean; }) {
