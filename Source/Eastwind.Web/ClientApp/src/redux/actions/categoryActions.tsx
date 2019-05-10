@@ -1,7 +1,7 @@
 import * as types from "./actionTypes";
 import { CategoryService } from "../../api/categoriesApi";
 import { apiCallBegin, apiCallError } from "./apiStatusActions";
-import { Category } from "../../category";
+import { Category } from "../../entities/category";
 export function categoryListLoadSuccess(categories: any) {
   return { type: types.CATEGORY_LIST_LOAD_SUCCESS, categories };
 }
@@ -16,7 +16,6 @@ export function categoryListLoad() {
       },
       error => {
         dispatch(apiCallError(error.message));
-        //throw error;
       }
     );
   };
