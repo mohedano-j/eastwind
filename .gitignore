@@ -259,3 +259,4 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
+Source/Eastwind.Web/ClientApp/src/components/products/__snapshots__/ProductForm.Snapshots.test.tsx.snap

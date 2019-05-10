@@ -26,7 +26,7 @@ type propsType = {
   product: any;
 };
 
-function ManageProductPage({
+export function ManageProductPage({ //Adding export so we can mounted in the Unit Test without a conection
   products,
   categories,
   categoryListLoad,
