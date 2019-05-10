@@ -1,7 +1,7 @@
 import * as types from "./actionTypes";
-import * as categoriesApi from "../../api/categoriesApi";
+import { CategoryService } from "../../api/categoriesApi";
 import { apiCallBegin, apiCallError } from "./apiStatusActions";
-
+import { Category } from "../../category";
 export function categoryListLoadSuccess(categories: any) {
   return { type: types.CATEGORY_LIST_LOAD_SUCCESS, categories };
 }
@@ -9,14 +9,15 @@ export function categoryListLoadSuccess(categories: any) {
 export function categoryListLoad() {
   return function(dispatch: any) {
     dispatch(apiCallBegin());
-    return categoriesApi
-      .categoryListLoad()
-      .then(categories => {
+    var categoryService = new CategoryService();
+    return categoryService.getAll().subscribe(
+      (categories: Category[]) => {
         dispatch(categoryListLoadSuccess(categories));
-      })
-      .catch(error => {
-        dispatch(apiCallError(error));
-        throw error;
-      });
+      },
+      error => {
+        dispatch(apiCallError(error.message));
+        //throw error;
+      }
+    );
   };
 }

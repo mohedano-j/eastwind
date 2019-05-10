@@ -52,9 +52,7 @@ class ProductsPage extends React.Component<propsType, stateType> {
       productListLoad
     } = this.props;
     if (categories.length === 0) {
-      categoryListLoad().catch((error: any) => {
-        alert("Loading categories failed" + error);
-      });
+      categoryListLoad();
     }
 
     if (products.length === 0) {
