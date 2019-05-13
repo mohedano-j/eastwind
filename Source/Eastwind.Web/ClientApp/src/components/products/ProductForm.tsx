@@ -2,10 +2,12 @@ import React from "react";
 import PropTypes from "prop-types";
 import TextInput from "../common/Form/TextInput";
 import SelectInput from "../common/Form/SelectInput";
+import { Product } from "../../Entities/product";
+import { Category } from "../../Entities/category";
 
 type propsType = {
-  product: any;
-  categories: Array<any>;
+  product: Product;
+  categories: Array<Category>;
   onSave: any;
   onCancel: any;
   onChange: any;

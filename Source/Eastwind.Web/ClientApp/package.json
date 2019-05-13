@@ -3,8 +3,13 @@
   "description": "Product Application",
   "scripts": {
     "start": "webpack-dev-server --config webpack.config.dev.js --port 3000",
-    "build": "babel src -d dist --source-maps",
-    "test": "jest"
+    "prebuild": "run-p clean:build test:ci",
+    "build": "webpack --config webpack.config.prod.js",
+    "clean:build": "rimraf ./build && mkdir build",
+    "test": "jest --watch",
+    "test:ci" : "jest",
+    "postbuild": "run-p serve:build",
+    "serve:build": "http-server ./build"
   },
   "jest": {
     "setupFiles": [

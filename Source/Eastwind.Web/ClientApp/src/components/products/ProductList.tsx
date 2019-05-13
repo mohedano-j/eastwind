@@ -1,9 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Modal from "../common/Modal/Modal";
+import { Product } from "../../Entities/product";
 
 type propTypes = {
-  products: Array<any>;
+  products: Array<Product>;
   onRequestSort: any;
   onDeleteClick: any;
   onDeleteConfirm: any;
