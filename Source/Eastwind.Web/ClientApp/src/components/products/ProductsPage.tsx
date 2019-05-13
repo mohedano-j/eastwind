@@ -7,10 +7,12 @@ import ProductList from "./ProductList";
 import { Redirect } from "react-router-dom";
 import Spinner from "../common/Spinner/Spinner";
 import { toast } from "react-toastify";
+import { Product } from "../../Entities/product";
+import { Category } from "../../Entities/category";
 
 type propsType = {
-  products: Array<any>;
-  categories: Array<any>;
+  products: Array<Product>;
+  categories: Array<Category>;
   categoryListLoad: any;
   productListLoad: any;
   productListSort: any;
@@ -19,8 +21,8 @@ type propsType = {
 };
 
 type stateType = {
-  products: Array<any>;
-  categories: Array<any>;
+  products: Array<Product>;
+  categories: Array<Category>;
   clickedProduct: any;
   nextOrderAsc: string;
   modalIsOpen: boolean;

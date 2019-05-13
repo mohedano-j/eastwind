@@ -1,7 +1,7 @@
 import React from "react";
-import ProductForm from "./ProductForm";
+import ProductForm from "../ProductForm";
 import renderer from "react-test-renderer";
-import { products,categories } from "../../tools/mockData";
+import { products,categories } from "../../../tools/mockData";
 
 it("sets submit button label 'Saving...' when saving is true", () => {
   const tree = renderer.create(

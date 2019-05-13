@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import * as productActions from "../../redux/actions/productActions";
 import * as categoryActions from "../../redux/actions/categoryActions";
 import ProductForm from "./ProductForm";
-import PropTypes from "prop-types";
 import Spinner from "../common/Spinner/Spinner";
 import { toast } from "react-toastify";
 
